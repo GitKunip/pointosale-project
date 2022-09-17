@@ -70,6 +70,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             qs.fetch_menu_data(menu, text, comb)
             self.topping_choice(menu, comb.currentText())
 
+        # Create daily first entry of balance information:
+        now = datetime.datetime.now()
+        date = f"{now.day}/{now.month}/{now.year}"
+        qs.daily_balance_check(date)
+
         # State components:
         self.items = TodoModel()
         self.itemsView.setModel(self.items)
@@ -494,7 +499,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         total_sales = 0
         credit = 0
         payment = ''
-
         # Calculate total sales
         for _, _, item_price, item_discount in self.items.todos:
             total_sales += item_price
